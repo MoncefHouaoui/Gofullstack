@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const path = require('path');
 
-const stuffRoutes = require('./routes/stuff');
+const bookRoutes = require('./routes/book');
+const userRoutes = require('./routes/user');
+
 
 mongoose.connect('mongodb://Moncef:Moncef@ac-b2lfddl-shard-00-00.ul0jbom.mongodb.net:27017,ac-b2lfddl-shard-00-01.ul0jbom.mongodb.net:27017,ac-b2lfddl-shard-00-02.ul0jbom.mongodb.net:27017/?ssl=true&replicaSet=atlas-rzp3a3-shard-0&authSource=admin&appName=Cluster0')
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -18,6 +21,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/stuff', stuffRoutes);
+app.use('/api/book', bookRoutes);
+app.use('/api/auth', userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
